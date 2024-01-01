@@ -1,0 +1,11 @@
+spring:
+  data:
+    mongodb:
+      database: enxolist
+      port: 27017
+      host: localhost
+
+api:
+  security:
+    token:
+      secret: ${JWT_SECRET:my-secret-key}
