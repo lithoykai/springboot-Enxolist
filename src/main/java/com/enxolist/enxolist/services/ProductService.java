@@ -58,16 +58,11 @@ public class ProductService implements IProductService{
         repository.deleteById(id);
     }
 
-    @Override
-    public ProductResponse update(Product product, String id, String idUser) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
-    }
 
     @Override
-    public Product showProductForiD(String id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'showProductForiD'");
+    public ProductResponse getUniqueProduct(String id) {
+        Product product = this.repository.findById(id).orElse(null);
+        return createProductResponse(product);
     }
 
     @Override

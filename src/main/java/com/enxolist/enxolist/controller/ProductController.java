@@ -28,6 +28,7 @@ import jakarta.validation.Valid;
 
 
 
+
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -47,15 +48,24 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity getProductsUser(@PathVariable String id, HttpServletRequest request) {
-        System.out.println(id);
         var idUser = request.getAttribute("idUser").toString();
-        System.out.println(idUser.equals(id));
         if(idUser.equals(id)){ 
             return ResponseEntity.ok(this.service.listProducts((String) idUser));
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User without permission to get these products.");
     
     }
+
+    @GetMapping("/id/{id}")
+    public ResponseEntity<?> getUniqueProduct(@PathVariable String id, HttpServletRequest request) {
+        var idUser = request.getAttribute("idUser").toString();
+        ProductResponse response = service.getUniqueProduct(id);
+        if(response.getIdUser().equals(idUser)){ 
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User without permission to get the product.");
+    }
+    
 
     
     @PutMapping("/{id}")

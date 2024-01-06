@@ -18,9 +18,7 @@ public interface IProductService {
 
     List<Product> listProducts(String idUser);
     
-    ProductResponse update(Product product, String id, String idUser);
-
-    Product showProductForiD(String id);
+    ProductResponse getUniqueProduct(String id);
 
     void deleteProduct(String id);
 
