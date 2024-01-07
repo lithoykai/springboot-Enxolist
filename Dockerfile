@@ -15,9 +15,6 @@ RUN systemctl start mongod
 FROM openjdk:17-jdk-slim
 
 EXPOSE 8080
-export MONGODB_VERSION=6.0-ubi8
-docker run --name mongodb -d mongodb/mongodb-community-server:$MONGODB_VERSION
-
 
 COPY --from=build /target/enxolist-0.0.1-SNAPSHOT.jar app.jar
 
