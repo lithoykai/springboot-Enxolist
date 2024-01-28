@@ -12,4 +12,5 @@ public class EnxolistApplication {
 		SpringApplication.run(EnxolistApplication.class, args);
 	}
 
+	
 }
