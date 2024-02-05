@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enxolist.enxolist.model.Request.ProductRequest;
+import com.enxolist.enxolist.model.Response.ErrorResponse;
 import com.enxolist.enxolist.model.Response.ProductResponse;
 import com.enxolist.enxolist.persistence.entity.Product;
 import com.enxolist.enxolist.persistence.repositories.IProductRepository;
@@ -49,10 +50,20 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity getProductsUser(@PathVariable String id, HttpServletRequest request) {
         var idUser = request.getAttribute("idUser").toString();
-        if(idUser.equals(id)){ 
+        if(idUser.equals(id)){  
             return ResponseEntity.ok(this.service.listProducts((String) idUser));
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User without permission to get these products.");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse("User without permission to get these products."));
+    
+    }
+    @GetMapping("/{id}/category/{category}")
+    public ResponseEntity getCategoryItems(@PathVariable String id, @PathVariable int category, HttpServletRequest request) {
+        var idUser = request.getAttribute("idUser").toString();
+        System.err.println(category);   
+        if(idUser.equals(id)){ 
+            return ResponseEntity.ok(this.service.listProductsForCategory((String) idUser, (int) category));
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse("User without permission to get these products."));
     
     }
 
@@ -63,7 +74,7 @@ public class ProductController {
         if(response.getIdUser().equals(idUser)){ 
             return ResponseEntity.ok(response);
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User without permission to get the product.");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse("User without permission to get the product."));
     }
     
 
@@ -74,11 +85,11 @@ public class ProductController {
         var product = this.repository.findById(id).orElse(null);
         System.out.println(id);
         if(product == null){ 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("Not found."));
         }
 
         if(!product.getIdUser().equals(idUser)){ 
-            return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User without permission to change this product.");
+            return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse("User without permission to change this product."));
         }
 
         Utils.copyNonNullProperties(productRequest,product);

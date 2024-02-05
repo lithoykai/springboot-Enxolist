@@ -17,6 +17,7 @@ public class ProductResponse {
     
     private String name;
     private int price;
+    private int category;
     private String urlLink;
     private Boolean wasBought;
     private String image;
@@ -32,6 +33,7 @@ public class ProductResponse {
     ){ 
         this.name = request.getName();
         this.price = request.getPrice();
+        this.category = request.getCategory();
         this.image = request.getImage();
         this.urlLink = request.getUrlLink();
         this.wasBought = request.getWasBought();

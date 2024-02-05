@@ -13,5 +13,7 @@ public interface IProductRepository extends MongoRepository<Product, String>{
     
     List<Product> findByIdUser(String idUser);
 
+    List<Product> findByCategory(int category);
+
 }
     

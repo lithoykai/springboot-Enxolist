@@ -11,6 +11,7 @@ public class ProductRequest {
         
     private String name;
     private int price;
+    private int category;
     private String urlLink;
     private Boolean wasBought;
     private String image;

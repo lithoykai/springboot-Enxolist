@@ -22,5 +22,7 @@ public interface IProductService {
 
     void deleteProduct(String id);
 
+    List<Product> listProductsForCategory(String idUser, int category);
+
     ProductResponse imagePatch(JsonPatch patch, Product targetProduct) throws JsonPatchException, JsonProcessingException;
 }

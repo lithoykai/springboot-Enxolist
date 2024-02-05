@@ -1,5 +1,6 @@
 package com.enxolist.enxolist.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class ProductService implements IProductService{
         response.setName(product.getName());
         response.setPrice(product.getPrice());
         response.setImage(product.getImage());
+        response.setCategory(product.getCategory());
         response.setUrlLink(product.getUrlLink());
         response.setWasBought(product.getWasBought());
         response.setIdUser(product.getIdUser());
@@ -71,6 +73,20 @@ public class ProductService implements IProductService{
         JsonNode patched = patch.apply(objectMapper.convertValue(targetProduct, JsonNode.class));
         return objectMapper.treeToValue(patched, ProductResponse.class);
     }
+
+        @Override
+        public List<Product> listProductsForCategory(String idUser, int category) {
+            List<Product> productsUser = this.repository.findByIdUser(idUser);
+            
+            System.err.println(category);
+             List<Product> response = new ArrayList<>();
+             for (Product product : productsUser) {
+                if (product.getCategory() == category) {
+                    response.add(product);
+                }} 
+                return response;
+    
+        }
 
 
     

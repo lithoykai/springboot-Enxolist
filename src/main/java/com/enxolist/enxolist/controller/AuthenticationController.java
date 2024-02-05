@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enxolist.enxolist.infra.security.TokenService;
+import com.enxolist.enxolist.model.Response.ErrorResponse;
 import com.enxolist.enxolist.model.Response.UserResponse;
 import com.enxolist.enxolist.persistence.entity.user.AuthenticationDTO;
 import com.enxolist.enxolist.persistence.entity.user.LoginResponseDTO;
@@ -49,12 +50,12 @@ public class AuthenticationController {
         var token = tokenService.generateToken((User) auth.getPrincipal());
         var date = LocalDateTime.now().plusHours(2);
 
-        return ResponseEntity.ok(new LoginResponseDTO(loginUser.getId(), loginUser.getEmail(), token, 2));
+        return ResponseEntity.ok(new LoginResponseDTO(loginUser.getId(), loginUser.getName(), loginUser.getEmail(), token, 2));
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody @Valid RegisterDTO data){
-        if(this.repository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
+        if(this.repository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().body(new ErrorResponse("Email já existente."));
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
         User newUser = new User(data.email(), data.name(), encryptedPassword, data.role());
@@ -67,7 +68,7 @@ public class AuthenticationController {
         var token = tokenService.generateToken((User) auth.getPrincipal());
         UserResponse response = this.service.createUserResponse(newUser);
 
-        return ResponseEntity.ok(new LoginResponseDTO(response.getId(), response.getEmail(), token, 2));
+        return ResponseEntity.ok(new LoginResponseDTO(response.getId(), response.getName(),response.getEmail(), token, 2));
     }
     
 }

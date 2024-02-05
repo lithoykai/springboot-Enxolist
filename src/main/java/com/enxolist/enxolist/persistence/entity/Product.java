@@ -23,6 +23,7 @@ public class Product {
     
     private String name;
     private int price;
+    private int category;
     private String urlLink;
     private Boolean wasBought;
     private String image;
@@ -36,6 +37,7 @@ public class Product {
         this.name = request.getName();
         this.price = request.getPrice();
         this.image = request.getImage();
+        this.category = request.getCategory();
         this.urlLink = request.getUrlLink();
         this.wasBought = request.getWasBought();
         this.idUser = request.getIdUser();
