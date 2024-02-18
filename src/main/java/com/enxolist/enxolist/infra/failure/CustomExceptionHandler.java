@@ -1,4 +1,4 @@
-package com.enxolist.enxolist.advice;
+package com.enxolist.enxolist.infra.failure;
 
 import java.nio.file.AccessDeniedException;
 

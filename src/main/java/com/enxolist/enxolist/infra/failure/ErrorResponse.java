@@ -1,4 +1,4 @@
-package com.enxolist.enxolist.model.Response;
+package com.enxolist.enxolist.infra.failure;
 
 public record ErrorResponse(String error) {
     

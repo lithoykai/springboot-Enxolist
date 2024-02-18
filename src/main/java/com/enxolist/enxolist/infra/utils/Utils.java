@@ -1,4 +1,4 @@
-package com.enxolist.enxolist.utils;
+package com.enxolist.enxolist.infra.utils;
 
 import java.beans.PropertyDescriptor;
 import java.util.HashSet;

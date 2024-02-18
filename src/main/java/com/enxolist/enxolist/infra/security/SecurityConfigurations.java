@@ -28,6 +28,8 @@ public class SecurityConfigurations {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
             .requestMatchers(HttpMethod.POST, "/auth/*").permitAll()
+            .requestMatchers(HttpMethod.GET, "/auth/*").permitAll()
+            .requestMatchers(HttpMethod.DELETE, "/auth/*").permitAll()
             .requestMatchers(HttpMethod.POST, "/products/*").hasRole("USER")
             .requestMatchers(HttpMethod.GET, "  /products/*").hasRole("USER")
             .requestMatchers(HttpMethod.PUT, "/products/").hasRole("USER")

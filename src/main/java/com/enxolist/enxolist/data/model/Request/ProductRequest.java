@@ -1,4 +1,4 @@
-package com.enxolist.enxolist.model.Request;
+package com.enxolist.enxolist.data.model.Request;
 
 import java.util.Date;
 
@@ -10,7 +10,7 @@ import lombok.Data;
 public class ProductRequest {
         
     private String name;
-    private int price;
+    private double price;
     private int category;
     private String urlLink;
     private Boolean wasBought;

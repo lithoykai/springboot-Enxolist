@@ -9,8 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.enxolist.enxolist.persistence.entity.user.User;
-import com.enxolist.enxolist.persistence.repositories.IUserRepository;
+import com.enxolist.enxolist.data.repositories.IUserRepository;
+import com.enxolist.enxolist.domain.persistence.entity.user.User;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

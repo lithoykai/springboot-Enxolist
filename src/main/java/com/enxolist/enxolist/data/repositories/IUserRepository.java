@@ -1,11 +1,13 @@
-package com.enxolist.enxolist.persistence.repositories;
+package com.enxolist.enxolist.data.repositories;
+
+import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.enxolist.enxolist.model.Response.UserResponse;
-import com.enxolist.enxolist.persistence.entity.user.User;
+import com.enxolist.enxolist.data.model.Response.UserResponse;
+import com.enxolist.enxolist.domain.persistence.entity.user.User;
 
 @Repository
 public interface IUserRepository extends MongoRepository<User, String> {
@@ -15,5 +17,7 @@ public interface IUserRepository extends MongoRepository<User, String> {
 
     @Query("{ 'email' : ?0 }")
     public User findByEmail(String email);
+
+    public List<User> findAll();
 
 }

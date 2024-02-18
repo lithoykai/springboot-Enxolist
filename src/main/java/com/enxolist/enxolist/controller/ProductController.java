@@ -1,5 +1,7 @@
 package com.enxolist.enxolist.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,19 +15,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.enxolist.enxolist.model.Request.ProductRequest;
-import com.enxolist.enxolist.model.Response.ErrorResponse;
-import com.enxolist.enxolist.model.Response.ProductResponse;
-import com.enxolist.enxolist.persistence.entity.Product;
-import com.enxolist.enxolist.persistence.repositories.IProductRepository;
-import com.enxolist.enxolist.services.ProductService;
-import com.enxolist.enxolist.utils.Utils;
+import com.enxolist.enxolist.data.model.Request.ProductRequest;
+import com.enxolist.enxolist.data.model.Response.ProductResponse;
+import com.enxolist.enxolist.data.model.Response.ResponseMsg;
+import com.enxolist.enxolist.data.model.Response.TotalValue;
+import com.enxolist.enxolist.data.repositories.IProductRepository;
+import com.enxolist.enxolist.data.services.ProductService;
+import com.enxolist.enxolist.domain.persistence.entity.Product;
+import com.enxolist.enxolist.infra.failure.ErrorResponse;
+import com.enxolist.enxolist.infra.utils.Utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+
 
 
 
@@ -47,7 +52,7 @@ public class ProductController {
         return ResponseEntity.ok(this.service.create(request));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/all/{id}")
     public ResponseEntity getProductsUser(@PathVariable String id, HttpServletRequest request) {
         var idUser = request.getAttribute("idUser").toString();
         if(idUser.equals(id)){  
@@ -59,7 +64,7 @@ public class ProductController {
     @GetMapping("/{id}/category/{category}")
     public ResponseEntity getCategoryItems(@PathVariable String id, @PathVariable int category, HttpServletRequest request) {
         var idUser = request.getAttribute("idUser").toString();
-        System.err.println(category);   
+         
         if(idUser.equals(id)){ 
             return ResponseEntity.ok(this.service.listProductsForCategory((String) idUser, (int) category));
         }
@@ -83,7 +88,7 @@ public class ProductController {
     public ResponseEntity<Object> update(@RequestBody ProductRequest productRequest, HttpServletRequest request, @PathVariable String id){
         var idUser = request.getAttribute("idUser");
         var product = this.repository.findById(id).orElse(null);
-        System.out.println(id);
+       
         if(product == null){ 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("Not found."));
         }
@@ -98,9 +103,9 @@ public class ProductController {
     }
     
     @DeleteMapping("/del/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable String id) {
+    public ResponseEntity<ResponseMsg> deleteProduct(@PathVariable String id) {
         this.service.deleteProduct(id);
-        return ResponseEntity.ok("Produto deletado com sucesso!");
+        return ResponseEntity.ok(new ResponseMsg("Produto deletado com sucesso"));
     }
 
 
@@ -115,4 +120,11 @@ public class ProductController {
         
         }
     }
+
+    @GetMapping("/all/price")
+    public ResponseEntity<List<TotalValue>> getAllPriceByCategory(HttpServletRequest request) {
+        var idUser = request.getAttribute("idUser").toString();
+        return ResponseEntity.ok(this.service.listAllPriceByCategory(idUser));
+    }
+    
 }

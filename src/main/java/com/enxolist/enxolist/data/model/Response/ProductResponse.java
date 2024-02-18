@@ -1,28 +1,22 @@
-package com.enxolist.enxolist.persistence.entity;
+package com.enxolist.enxolist.data.model.Response;
 
 import java.util.Date;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.enxolist.enxolist.model.Request.ProductRequest;
+import com.enxolist.enxolist.data.model.Request.ProductRequest;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@Document
-@NoArgsConstructor
-@AllArgsConstructor
-public class Product {
+public class ProductResponse {
     
     @Id
     private String id;
     
     private String name;
-    private int price;
+    private double price;
     private int category;
     private String urlLink;
     private Boolean wasBought;
@@ -31,18 +25,19 @@ public class Product {
     private Date createdAt;
     private String idUser;
 
-    public Product(
+
+    public ProductResponse(){}
+
+    public ProductResponse(
         ProductRequest request
     ){ 
         this.name = request.getName();
         this.price = request.getPrice();
-        this.image = request.getImage();
         this.category = request.getCategory();
+        this.image = request.getImage();
         this.urlLink = request.getUrlLink();
         this.wasBought = request.getWasBought();
         this.idUser = request.getIdUser();
         this.createdAt = request.getCreatedAt();
     }
-
-
 }
