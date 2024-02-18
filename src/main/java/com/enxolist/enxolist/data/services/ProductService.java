@@ -77,7 +77,6 @@ public class ProductService implements IProductService{
         public List<Product> listProductsForCategory(String idUser, int category) {
             List<Product> productsUser = this.repository.findByIdUser(idUser);
             
-            System.err.println(category);
              List<Product> response = new ArrayList<>();
              for (Product product : productsUser) {
                 if (product.getCategory() == category) {

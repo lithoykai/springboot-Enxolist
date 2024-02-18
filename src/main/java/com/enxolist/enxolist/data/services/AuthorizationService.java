@@ -41,7 +41,6 @@ public class AuthorizationService implements UserDetailsService {
 
      public List<User> listUsers(){ 
         List<User> users = this.repository.findAll();
-        System.err.println(users);
         return users;
      }
 
